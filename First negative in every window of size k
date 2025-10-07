@@ -1,0 +1,44 @@
+class Solution 
+{
+    static List<Integer> firstNegInt(int arr[], int k) 
+    {
+        // write code here
+        Deque <Integer> dq = new LinkedList<>();
+        List<Integer> ans = new ArrayList<>();
+        for(int i = 0;i<k;i++)
+        {
+            if(arr[i]<0)
+            {
+                dq.addLast(i);
+            }
+        }
+        for(int i = k;i<arr.length;i++)
+        {
+            if(!dq.isEmpty())
+            {
+                ans.add(arr[dq.peekFirst()]);
+            }
+            else
+            {
+                ans.add(0);
+            }
+            if(!dq.isEmpty() && dq.peekFirst()<=i-k)
+            {
+                dq.removeFirst();
+            }
+            if(arr[i]<0)
+            {
+                dq.addLast(i);
+            }
+        }
+        if(!dq.isEmpty())
+        {
+            ans.add(arr[dq.peekFirst()]);
+        }
+        else
+        {
+            ans.add(0);
+        }
+        return ans;
+    }
+}
