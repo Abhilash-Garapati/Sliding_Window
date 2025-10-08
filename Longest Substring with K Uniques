@@ -1,0 +1,47 @@
+class Solution 
+{
+    public int longestKSubstr(String s, int k) 
+    {
+        // code here
+        HashMap <Character,Integer> mp =new HashMap<>();
+        int left = 0;
+        int right = 0;
+        int ans = 0;
+        while(right<s.length())
+        {
+            if(mp.containsKey(s.charAt(right)))
+            {
+                mp.put(s.charAt(right),mp.get(s.charAt(right))+1);
+                right++;
+            }
+            else
+            {
+                mp.put(s.charAt(right),1);
+                right++;
+            }
+            while(mp.size()>k)
+            {
+                if(mp.containsKey(s.charAt(left)) && mp.get(s.charAt(left))>1)
+                {
+                    mp.put(s.charAt(left),mp.get(s.charAt(left))-1);
+                }
+                else
+                {
+                    mp.remove(s.charAt(left));
+                }
+                left++;
+            }
+            if(mp.size()==k)
+            {
+                int count = 0;
+                for(int n : mp.values())
+                {
+                    count += n;
+                }
+                ans = Math.max(ans,count);
+            }
+        }
+        return (ans==0)? -1 : ans;
+        
+    }
+}
